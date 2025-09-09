@@ -56,3 +56,84 @@ It does not matter what you leave beyond the returned k (hence they are undersco
 	<li><code>0 &lt;= nums[i] &lt;= 50</code></li>
 	<li><code>0 &lt;= val &lt;= 100</code></li>
 </ul>
+
+
+
+<hr>
+한국어 번역
+<hr>
+
+## 문제 요약
+
+정수 배열 `nums`와 정수 `val`이 주어집니다.
+`nums` 안에서 값이 `val`인 모든 원소를 **제거(in-place, 즉 배열 내부에서 직접 수정)** 해야 합니다.
+그 후, `val`이 아닌 원소들의 개수 `k`를 반환해야 합니다.
+
+배열의 순서는 바뀌어도 상관없습니다.
+즉, `val`을 제거한 뒤 남은 원소들의 상대적 순서를 유지할 필요는 없습니다.
+
+---
+
+### 조건
+
+* `nums` 배열을 직접 수정해야 합니다.
+* 반환값 `k`는 `val`이 아닌 원소들의 개수를 의미합니다.
+* 수정된 `nums`의 앞부분 `k`개에는 반드시 `val`이 아닌 원소들이 들어 있어야 합니다.
+* `nums`의 그 이후 요소들은 어떤 값이든 상관없습니다. (무시해도 됨)
+
+---
+
+### 채점 방식 (Custom Judge)
+
+
+```java
+int[] nums = [...]; // 입력 배열
+int val = ...;      // 제거할 값
+int[] expectedNums = [...]; // 정답 배열 (val을 모두 제거한 뒤의 결과)
+                            // 이 배열은 정렬된 상태이고 val 값 없음
+
+int k = removeElement(nums, val); // 사용자가 구현한 함수 호출
+
+assert k == expectedNums.length;
+sort(nums, 0, k); // nums의 앞 k개 원소를 정렬
+for (int i = 0; i < actualLength; i++) {
+    assert nums[i] == expectedNums[i];
+}
+```
+
+즉:
+
+1. 함수에서 반환한 `k` 값이 기대한 길이와 같아야 하고,
+2. `nums`의 앞부분 `k`개가 기대한 배열과 같으면 정답 처리됩니다.
+
+---
+
+### 예시 1
+
+```
+입력: nums = [3,2,2,3], val = 3
+출력: 2, nums = [2,2,_,_]
+설명: val=3인 원소를 모두 제거 → 남은 원소는 [2,2].
+k = 2 반환. 이후 인덱스는 어떤 값이든 상관없음.
+```
+
+---
+
+### 예시 2
+
+```
+입력: nums = [0,1,2,2,3,0,4,2], val = 2
+출력: 5, nums = [0,1,4,0,3,_,_,_]
+설명: val=2 제거 후 남은 원소는 [0,1,3,0,4] (순서는 바뀌어도 OK).
+따라서 k = 5 반환.
+```
+
+---
+
+### 제약 조건
+
+* `0 <= nums.length <= 100`
+* `0 <= nums[i] <= 50`
+* `0 <= val <= 100`
+
+
